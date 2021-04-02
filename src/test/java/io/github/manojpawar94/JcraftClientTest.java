@@ -52,7 +52,7 @@ class JcraftClientTest {
 	@Test
 	void testExecuteCommands() {
 		String command = "ls -lrt";
-		JSshResult jSshResult = client.testSSH(getProxy(command));
+		JSshResult jSshResult = client.execute(getProxy(command));
 
 		Assertions.assertNotNull(jSshResult);
 		Assertions.assertTrue(jSshResult.isStatus());
@@ -64,7 +64,7 @@ class JcraftClientTest {
 	@Test
 	void testShellCommands() {
 		ShellCommand command = ShellCommand.builder().command("ls -lrt").command("pwd").command("who i am").build();
-		JSshResult jSshResult = client.testSSH(getProxy(command));
+		JSshResult jSshResult = client.shell(getProxy(command));
 
 		Assertions.assertNotNull(jSshResult);
 		Assertions.assertTrue(jSshResult.isStatus());
@@ -77,7 +77,7 @@ class JcraftClientTest {
 	void testCopyToRemote() {
 		SftpCommand command = SftpCommand.builder().from("C:/Users/manojpawar/sample_file.txt")
 				.to("/home/manojpawar/uploads").sftpType(SftpType.PUT).build();
-		JSshResult jSshResult = client.testSSH(getProxy(command));
+		JSshResult jSshResult = client.sftp(getProxy(command));
 
 		Assertions.assertNotNull(jSshResult);
 		Assertions.assertTrue(jSshResult.isStatus());
