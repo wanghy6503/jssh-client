@@ -3,14 +3,13 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>com.manoj</groupId>
+	<groupId>io.github.manojpawar94</groupId>
 	<artifactId>jssh-client</artifactId>
 	<version>0.0.1</version>
 	<packaging>jar</packaging>
 
 	<name>jssh-client</name>
-	<url>http://maven.apache.org</url>
-
+	<url>https://github.com/manojpawar94/jssh-client</url>
 	<description>JSSH clinet to perform operation on remote server. It has been build on top of Jsch.</description>
 
 	<developers>
@@ -30,6 +29,23 @@
 			<url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
 		</license>
 	</licenses>
+
+	<scm>
+		<connection>scm:git:git@github.com/manojpawar94/jssh-client.git</connection>
+		<developerConnection>scm:git:ssh@github.com:manojpawar94/jssh-client.git</developerConnection>
+		<url>https://github.com/manojpawar94/jssh-client/tree/main</url>
+	</scm>
+
+	<distributionManagement>
+		<snapshotRepository>
+			<id>ossrh</id>
+			<url>https://s01.oss.sonatype.org/content/repositories/snapshots</url>
+		</snapshotRepository>
+		<repository>
+			<id>ossrh</id>
+			<url>https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+		</repository>
+	</distributionManagement>
 
 	<properties>
 		<java.version>1.8</java.version>
