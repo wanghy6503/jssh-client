@@ -83,7 +83,7 @@ public class JcraftClient extends Jcraft implements JSshClient {
 			session = configureSession(commandProxy);
 			session.connect(commandProxy.getSessionTimeOut());
 
-			channelExec = configureChannel(ChannelExec.class, session, commandProxy);
+			channelExec = configureExecChannel(session, commandProxy);
 			channelExec.setCommand(commandProxy.getTask());
 			InputStream commandOutput = channelExec.getInputStream();
 			channelExec.connect(commandProxy.getChannelTimeOut());
@@ -117,7 +117,7 @@ public class JcraftClient extends Jcraft implements JSshClient {
 			session = configureSession(shellProxy);
 			session.connect(shellProxy.getSessionTimeOut());
 
-			channelShell = configureChannel(ChannelShell.class, session, shellProxy);
+			channelShell = configureShellChannel(session, shellProxy);
 			ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
 			channelShell.setOutputStream(outputStream);
 			PrintStream printStream = new PrintStream(channelShell.getOutputStream());
@@ -131,7 +131,6 @@ public class JcraftClient extends Jcraft implements JSshClient {
 			return JSshResult.builder().status(true).value(resultText.toString()).build();
 		} catch (JSchException | IOException | InterruptedException e) {
 			resultText.append(e.getLocalizedMessage());
-			Arrays.stream(e.getStackTrace()).forEach(resultText::append);
 			return JSshResult.builder().status(false).value(resultText.toString()).error(e).build();
 		} finally {
 			if (Objects.nonNull(channelShell))
@@ -173,7 +172,7 @@ public class JcraftClient extends Jcraft implements JSshClient {
 			session = configureSession(jSshProxy);
 			session.connect(jSshProxy.getSessionTimeOut());
 
-			channelSftp = configureChannel(ChannelSftp.class, session, jSshProxy);
+			channelSftp = configureSftpChannel(session, jSshProxy);
 			channelSftp.connect(jSshProxy.getChannelTimeOut());
 
 			if (SftpType.PUT.equals(jSshProxy.getTask().getSftpType()))

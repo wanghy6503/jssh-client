@@ -89,35 +89,49 @@ public abstract class Jcraft {
 
 	/**
 	 * 
-	 * @param <C>         Class extends to {@link Channel}
-	 * @param channelType Class Instance of the Channel type class. The possible
-	 *                    instances at time of code develop were
-	 *                    {@link ChannelExec}, {@link ChannelShell},
-	 *                    {@link ChannelSftp}
-	 * @param session     {@link Session} instance {@code session.connect()} must be
-	 *                    on {@link Session} object instance before passing to the
-	 *                    method
-	 * @param jSshProxy   {@link JSshProxy} object instance
+	 * @param session   {@link Session} instance {@code session.connect()} must be
+	 *                  on {@link Session} object instance before passing to the
+	 *                  method
+	 * @param jSshProxy {@link JSshProxy} object instance
 	 * @return
+	 * @throws JSchException
 	 */
-	protected <C extends Channel> C configureChannel(Class<C> channelType, Session session, JSshProxy<?> jSshProxy) {
-		try {
-			C channel = channelType.newInstance();
+	protected ChannelExec configureExecChannel(Session session, JSshProxy<?> jSshProxy) throws JSchException {
+		ChannelExec channelExec = (ChannelExec) session.openChannel("exec");
+		channelExec.setPty(jSshProxy.isEnablePty());
+		return channelExec;
+	}
 
-			if (channel instanceof ChannelExec) {
-				ChannelExec channelExec = (ChannelExec) channel;
-				channelExec.setPty(jSshProxy.isEnablePty());
-			} else if (channel instanceof ChannelShell) {
-				ChannelShell channelShell = (ChannelShell) channel;
-				channelShell.setPty(jSshProxy.isEnablePty());
-				channelShell.setPtyType(jSshProxy.getPtyType(), TERMINAL_WIDTH, TERMINAL_HEIGHT,
-						TERMINAL_WIDTH_IN_PIXELS, TERMINAL_HEIGHT_IN_PIXELS);
-			}
-			return channel;
-		} catch (InstantiationException | IllegalAccessException e) {
-			e.printStackTrace();
-			return null;
-		}
+	/**
+	 * 
+	 * @param session   {@link Session} instance {@code session.connect()} must be
+	 *                  on {@link Session} object instance before passing to the
+	 *                  method
+	 * @param jSshProxy {@link JSshProxy} object instance
+	 * @return
+	 * @throws JSchException
+	 */
+	protected ChannelShell configureShellChannel(Session session, JSshProxy<?> jSshProxy) throws JSchException {
+		ChannelShell channelShell = (ChannelShell) session.openChannel("shell");
+		;
+		channelShell.setPty(jSshProxy.isEnablePty());
+		channelShell.setPtyType(jSshProxy.getPtyType(), TERMINAL_WIDTH, TERMINAL_HEIGHT, TERMINAL_WIDTH_IN_PIXELS,
+				TERMINAL_HEIGHT_IN_PIXELS);
+		return channelShell;
+	}
+
+	/**
+	 * 
+	 * @param session   {@link Session} instance {@code session.connect()} must be
+	 *                  on {@link Session} object instance before passing to the
+	 *                  method
+	 * @param jSshProxy {@link JSshProxy} object instance
+	 * @return
+	 * @throws JSchException
+	 */
+	protected ChannelSftp configureSftpChannel(Session session, JSshProxy<?> jSshProxy) throws JSchException {
+		ChannelSftp channelSftp = (ChannelSftp) session.openChannel("sftp");
+		return channelSftp;
 	}
 
 }
