@@ -18,7 +18,7 @@ Current version: 0.0.2
 <dependency>
 	<groupId>io.github.manojpawar94</groupId>
 	<artifactId>jssh-client</artifactId>
-	<version>${current_verion}}</version>
+	<version>${current_verion}</version>
 </dependency>
 ```
 
@@ -33,11 +33,19 @@ JSshClient client = JcraftClient.getInstance();
 It has various options to set based upon our need. It support both password based and SSH key based authentication mechnism. To set authentication mechnism we need to set respective attributes to the JSshProxy object.
 
 ```
+java.util.Properties properties = new java.util.Properties();
 JSshProxy<?> jSshProxy = JSshProxy.builder()
 					.hostname("123.12.34.5")
+					.port(22)
 					.username("test")
 					.password("test@123")
+					//.privateKey("")
+					.knownHostsFileName("")
+					.sessionTimeOut(10000)
+					.channelTimeOut(5000)
+					.properties(properties)
 					.enablePty(true)
+					//.ptyType("ANSI") used only for shell channel operation
 					.build();
 ```
 
@@ -133,7 +141,7 @@ JSshResult jSshResult = client.sftp(jSshProxy);
 
 ### Credits
 
-Title: JSsh-Client Documentation
-Author: Manoj Pawar
-Date: 03, April, 2021
+Title: JSsh-Client Documentation<br>
+Author: Manoj Pawar<br>
+Date: 03, April, 2021<br>
 
