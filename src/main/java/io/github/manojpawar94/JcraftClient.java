@@ -218,7 +218,7 @@ public class JcraftClient extends Jcraft implements JSshClient {
 
 	public static JcraftClient getInstance() {
 		if (Objects.isNull(instance)) {
-			synchronized (instance) {
+			synchronized (JcraftClient.class) {
 				instance = new JcraftClient();
 			}
 		}

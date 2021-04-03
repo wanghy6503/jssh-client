@@ -1,8 +1,3 @@
-% title: JSsh Client Documentation
-% author: MANOJ M PAWAR
-% date: today 
-
-
 # jssh-client
 
 The Jssh-client is Java based library build on top of the Jsch Library to perform operation on the remote server over SSH and SFTP channel. It has the following features,
@@ -135,3 +130,12 @@ JSshProxy<ShellCommand> jSshProxy = JSshProxy.builder()
                                         .build();
 JSshResult jSshResult = client.sftp(jSshProxy);
 ```
+
+### Credits
+
+---
+title: JSsh-Client Documentation
+author: Manoj Pawar
+date: today
+---
+
